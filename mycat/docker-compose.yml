@@ -1,0 +1,20 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.5
+    volumes:
+      - "/root/docker/mysql:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  mycat:
+    image: mycat
+    ports:
+      - "8066:8066"
+      - "9066:9066"
+    volumes:
+      - "/root/docker/mycat/server.xml:/usr/local/mycat/conf/server.xml"
+      - "/root/docker/mycat/schema.xml:/usr/local/mycat/conf/schema.xml"
+    depends_on:
+      - mysql
+    links:
+      - mysql:mysql
